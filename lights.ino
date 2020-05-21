@@ -1,10 +1,7 @@
 
 /*
-* Trucky Project
+* Lights Component
 */
-
-#include <SoftwareSerial.h>
-#include <ArduinoBlue.h>
 
 int button;
 int timer = 100;
@@ -22,7 +19,6 @@ void lightsSetup() {
   }
 
   Serial.println("Lights Setup complete");
-
 }
 
 void lightsLoop() {
@@ -45,25 +41,16 @@ void lightsLoop() {
 
   // Warning Lights
   if (button == 2) {
-    for (int thisPin = 4; thisPin < 5; thisPin++) {
-      digitalWrite(thisPin, HIGH);
-      delay(timer);
-      digitalWrite(thisPin, LOW);
-    }
-    for (int thisPin = 5; thisPin > 4; thisPin--) {
-      digitalWrite(thisPin, HIGH);
-      delay(timer);
-      digitalWrite(thisPin, LOW);
-    }
-
-    delay(500);
+    digitalWrite(4, !digitalRead(4));
     Serial.println("Luces Advertencia!");
+    Serial.println(digitalRead(4));
   }
 
+  // All systems down!
   if (button == 3) {
     for (int thisPin = 2; thisPin <= 10; thisPin++) {
       digitalWrite(thisPin, LOW);
     }
-    Serial.println("Todas las Luces apagadas!");
+    Serial.println("Todas apagado!");
   }
 }

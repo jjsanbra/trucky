@@ -1,5 +1,9 @@
-/*
 
+/*
+* Engines Component
+*/
+
+/*
 ARDUINO   L293D(Puente H)        
   6          10
   7          15
@@ -15,10 +19,10 @@ ARDUINO   L293D(Puente H)
   el positivo al pin 8 del puente H.  
 
 */
-//LEFT MOTOR
+//LEFT Engine
 int lA = 6; 
 int lB = 7;
-//RIGHT MOTOR 
+//RIGHT Engine 
 int rA = 8; 
 int rB = 9; 
 
