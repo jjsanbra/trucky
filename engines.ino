@@ -39,6 +39,8 @@ void enginesSetup()  {
   analogWrite(rB, 0);
   analogWrite(lA, 0); 
   analogWrite(lB, 0);
+
+  Serial.println("Engines Setup complete");
  } 
  
 void enginesLoop()  {
