@@ -9,10 +9,10 @@
 
 // The bluetooth tx and rx pins must be supported by software serial.
 // Visit https://www.arduino.cc/en/Reference/SoftwareSerial for unsupported pins.
-// Bluetooth TX -> Arduino D11
-const int BLUETOOTH_TX = 11;
-// Bluetooth RX -> Arduino D12
-const int BLUETOOTH_RX = 12;
+// Bluetooth TX -> Arduino D3
+const int BLUETOOTH_TX = 3;
+// Bluetooth RX -> Arduino D2
+const int BLUETOOTH_RX = 2;
 
 SoftwareSerial bluetooth(BLUETOOTH_TX, BLUETOOTH_RX);
 ArduinoBlue phone(bluetooth); // pass reference of bluetooth object to ArduinoBlue constructor.
@@ -24,6 +24,7 @@ void setup() {
 
   // Start bluetooth serial at 9600 bps.
   bluetooth.begin(9600);
+  bluetooth.write("AT+NAMEBLE_Trucky_Unit");
 
   lightsSetup();
   enginesSetup();
