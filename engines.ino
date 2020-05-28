@@ -5,10 +5,10 @@
 
 /*
 ARDUINO   L293D(Puente H)        
-  10         2
-  11         7
-  9          10
-  8          15
+  11         2
+  10         7
+  6          10
+  9          15
   5V         1, 9, 16
   GND        4, 5, 12, 13
   
@@ -19,12 +19,13 @@ ARDUINO   L293D(Puente H)
   el positivo al pin 8 del puente H.  
 
 */
-//LEFT Engine
-int lA = 10; 
-int lB = 11;
+
 //RIGHT Engine 
-int rA = 8; 
-int rB = 9; 
+int rA = 11; 
+int rB = 10; 
+//LEFT Engine
+int lA = 9; 
+int lB = 6;
 
 //
 int prevThrottle = 49;
@@ -52,16 +53,17 @@ void enginesLoop()  {
    * according to throttle value recibed
    * example: x = map( value_getted , fromMin , fromMax , toMin , toMax );
    */
-  Speed = map(throttle, 50, 100, 0 ,255);
+  Speed = 255;
+  //Speed = map( throttle , 50 , 100 , 0 , 255 );
   
   // Throttle and steering values go from 0 to 99.
   // When throttle and steering values are at 99/2 = 49, the joystick is at center.
   throttle = phone.getThrottle();
   steering = phone.getSteering();
   // Display throttle and steering data if steering or throttle value is changed
-  if (prevThrottle != throttle) {
-    Serial.print("Throttle: "); Serial.println(throttle) ; Serial.println(Speed);Serial.println(-Speed);
-  }
+//  if (prevThrottle != throttle) {
+//    Serial.print("Throttle: "); Serial.println(throttle) ; Serial.println(Speed);Serial.println(-Speed);
+//  }
   
   //STOP  
   if (prevThrottle == throttle){
@@ -70,26 +72,26 @@ void enginesLoop()  {
     analogWrite(lA, 0); 
     analogWrite(lB, 0);   
   }    
-  //MOTOR left FORWARDS :::TURNS RIGHT
-  if (prevSteering != steering && prevSteering <= steering){
-      Serial.println("MOTOR left FORWARDS");
-      analogWrite(rA, 0); 
-      analogWrite(rB, 0);
-      analogWrite(lA, Speed); 
-      analogWrite(lB, 0);
-  }
-  //MOTOR right FORWARDS :::TURNS LEFT
-  if (prevSteering != steering && prevSteering >= steering){
-      Serial.println("MOTOR right FORWARDS");
-      analogWrite(rA, Speed); 
-      analogWrite(rB, 0);
-      analogWrite(lA, 0); 
-      analogWrite(lB, 0); 
-  }
+//  //MOTOR left FORWARDS :::TURNS RIGHT
+//  if (prevSteering != steering && prevSteering <= steering){
+//      Serial.println("MOTOR left FORWARDS");
+//      analogWrite(rA, 0); 
+//      analogWrite(rB, 0);
+//      analogWrite(lA, Speed); 
+//      analogWrite(lB, 0);
+//  }
+//  //MOTOR right FORWARDS :::TURNS LEFT
+//  if (prevSteering != steering && prevSteering >= steering){
+//      Serial.println("MOTOR right FORWARDS");
+//      analogWrite(rA, Speed); 
+//      analogWrite(rB, 0);
+//      analogWrite(lA, 0); 
+//      analogWrite(lB, 0); 
+//  }
       
   //MOTOR left & right FORWARDS
   if (prevThrottle != throttle && prevThrottle <= throttle){
-      Serial.println("MOTOR left & right FORWARDS");
+      Serial.println("MOTOR left & right FORWARDS"); Serial.println(Speed);
       analogWrite(rA, Speed); 
       analogWrite(rB, 0);
       analogWrite(lA, Speed); 
@@ -97,10 +99,10 @@ void enginesLoop()  {
   }
   //MOTOR left & right BACKWARDS
   if (prevThrottle != throttle && prevThrottle >= throttle){
-      Serial.println("MOTOR left & right BACKWARDS");
+      Serial.println("MOTOR left & right BACKWARDS"); Serial.println(Speed);
       analogWrite(rA, 0); 
-      analogWrite(rB, -Speed);
+      analogWrite(rB, Speed);
       analogWrite(lA, 0); 
-      analogWrite(lB, -Speed); 
+      analogWrite(lB, Speed); 
   }
 }
